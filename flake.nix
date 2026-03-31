@@ -2,12 +2,10 @@
   description = "Pi 5 homelab: AdGuard, Prometheus, Grafana, Syncthing, Caddy";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     sops-nix.url = "github:Mic92/sops-nix";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
   };
 
-  # Optional: Binary cache for the flake
   nixConfig = {
     extra-substituters = [
       "https://nixos-raspberrypi.cachix.org"
@@ -19,23 +17,26 @@
 
   outputs = inputs @ {
     self,
-    nixpkgs,
-    nixos-raspberrypi,
     sops-nix,
+    nixos-raspberrypi,
     ...
-  }: let
-    system = "aarch64-linux";
-  in {
-    nixosConfigurations.pi5 = nixpkgs.lib.nixosSystem {
-      inherit system;
-      specialArgs = {inherit inputs;};
+  }: {
+    nixosConfigurations.pi5 = nixos-raspberrypi.lib.nixosSystem {
+      system = "aarch64-linux";
+
+      specialArgs = {
+        inherit (inputs) nixos-raspberrypi;
+      };
 
       modules = [
         sops-nix.nixosModules.sops
 
-        # Pi 5 board support from nvmd/nixos-raspberrypi
-        nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-        nixos-raspberrypi.nixosModules.sd-image
+        ({...}: {
+          imports = with nixos-raspberrypi.nixosModules; [
+            raspberry-pi-5.base
+            sd-image
+          ];
+        })
 
         ./hosts/pi5/default.nix
         ./hosts/pi5/networking.nix
