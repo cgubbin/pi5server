@@ -10,7 +10,7 @@
     settings = {
       experimental-features = ["nix-command" "flakes"];
       auto-optimise-store = true;
-      trusted-users = ["root" "alice"];
+      trusted-users = ["root" "kit"];
     };
 
     gc = {
@@ -49,7 +49,7 @@
       KbdInteractiveAuthentication = false;
       PermitRootLogin = "no";
       X11Forwarding = false;
-      AllowUsers = ["alice"];
+      AllowUsers = ["kit"];
     };
     openFirewall = true;
   };
