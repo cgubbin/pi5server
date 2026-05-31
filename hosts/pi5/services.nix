@@ -27,18 +27,27 @@ in {
 
     secrets = {
       "adguard/admin-password-hash" = {
+        sopsFile = ../../secrets/pi5.yaml;
+        key = "adguard/admin-password";
+        path = "/run/secrets/adguard/admin-password";
         owner = "adguardhome";
         group = "adguardhome";
         mode = "0400";
       };
 
       "grafana/admin-password" = {
+        sopsFile = ../../secrets/pi5.yaml;
+        key = "grafana/admin-password";
+        path = "/run/secrets/grafana/admin-password";
         owner = "grafana";
         group = "grafana";
         mode = "0400";
       };
 
       "syncthing/gui-password" = {
+        sopsFile = ../../secrets/pi5.yaml;
+        key = "syncthing/gui-password";
+        path = "/run/secrets/syncthing/gui-password";
         owner = "kit";
         group = "users";
         mode = "0400";
