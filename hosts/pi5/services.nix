@@ -63,8 +63,8 @@ in {
     # Make the config declarative.
     mutableSettings = false;
 
-    host = "127.0.0.1";
-    port = 3000;
+    # host = "127.0.0.1";
+    # port = 3000;
 
     settings = {
       http = {
@@ -118,17 +118,19 @@ in {
         parental_enabled = false;
       };
 
-      safebrowsing.enabled = true;
+      safebrowsing = {
+        enabled = true;
+      };
 
       querylog = {
         enabled = true;
-        interval = 2160;
+        interval = "2160h";
         size_memory = 1000;
       };
 
       statistics = {
         enabled = true;
-        interval = 24;
+        interval = "24h";
       };
 
       filters = [
