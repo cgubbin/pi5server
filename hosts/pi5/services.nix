@@ -28,8 +28,8 @@ in {
     secrets = {
       "adguard/admin-password-hash" = {
         sopsFile = ../../secrets/pi5.yaml;
-        key = "adguard/admin-password";
-        path = "/run/secrets/adguard/admin-password";
+        key = "adguard/admin-password-hash";
+        path = "/run/secrets/adguard/admin-password-hash";
         owner = "adguardhome";
         group = "adguardhome";
         mode = "0400";
