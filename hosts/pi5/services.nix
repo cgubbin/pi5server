@@ -15,151 +15,151 @@ in {
 
   services.fail2ban.enable = true;
 
-  # sops = {
-  #   defaultSopsFile = ../../secrets/pi5.yaml;
-  #   defaultSopsFormat = "yaml";
+  sops = {
+    defaultSopsFile = ../../secrets/pi5.yaml;
+    defaultSopsFormat = "yaml";
 
-  #   age = {
-  #     # Recommended for a server: host-specific age key stored locally.
-  #     keyFile = "/var/lib/sops-nix/key.txt";
-  #     generateKey = true;
-  #   };
+    age = {
+      # Recommended for a server: host-specific age key stored locally.
+      keyFile = "./config/sops/age/keys.txt";
+      generateKey = true;
+    };
 
-  #   secrets = {
-  #     "adguard/admin-password-hash" = {
-  #       owner = "adguardhome";
-  #       group = "adguardhome";
-  #       mode = "0400";
-  #     };
+    secrets = {
+      "adguard/admin-password-hash" = {
+        owner = "adguardhome";
+        group = "adguardhome";
+        mode = "0400";
+      };
 
-  #     "grafana/admin-password" = {
-  #       owner = "grafana";
-  #       group = "grafana";
-  #       mode = "0400";
-  #     };
+      "grafana/admin-password" = {
+        owner = "grafana";
+        group = "grafana";
+        mode = "0400";
+      };
 
-  #     "syncthing/gui-password" = {
-  #       owner = "kit";
-  #       group = "users";
-  #       mode = "0400";
-  #     };
+      "syncthing/gui-password" = {
+        owner = "kit";
+        group = "users";
+        mode = "0400";
+      };
 
-  #     # Optional, only needed if you later use Caddy DNS-provider plugins.
-  #     # "caddy/env" = {
-  #     #   owner = "caddy";
-  #     #   group = "caddy";
-  #     #   mode = "0400";
-  #     # };
-  #   };
-  # };
+      # Optional, only needed if you later use Caddy DNS-provider plugins.
+      # "caddy/env" = {
+      #   owner = "caddy";
+      #   group = "caddy";
+      #   mode = "0400";
+      # };
+    };
+  };
 
-  # services.adguardhome = {
-  #   enable = true;
+  services.adguardhome = {
+    enable = true;
 
-  #   # This option only opens the web UI; DNS is still handled explicitly
-  #   # by the firewall rules above.
-  #   openFirewall = true;
+    # This option only opens the web UI; DNS is still handled explicitly
+    # by the firewall rules above.
+    openFirewall = true;
 
-  #   # Make the config declarative.
-  #   mutableSettings = false;
+    # Make the config declarative.
+    mutableSettings = false;
 
-  #   host = "127.0.0.1";
-  #   port = 3000;
+    host = "127.0.0.1";
+    port = 3000;
 
-  #   settings = {
-  #     http = {
-  #       address = "127.0.0.1:3000";
-  #       session_ttl = "720h";
-  #     };
+    settings = {
+      http = {
+        address = "127.0.0.1:3000";
+        session_ttl = "720h";
+      };
 
-  #     users = [
-  #       {
-  #         name = "admin";
-  #         password = "$__file{/run/secrets/adguard/admin-password-hash}";
-  #       }
-  #     ];
+      users = [
+        {
+          name = "admin";
+          password = "$__file{/run/secrets/adguard/admin-password-hash}";
+        }
+      ];
 
-  #     auth_attempts = 5;
-  #     block_auth_min = 15;
+      auth_attempts = 5;
+      block_auth_min = 15;
 
-  #     dns = {
-  #       bind_hosts = ["0.0.0.0"];
-  #       port = 53;
+      dns = {
+        bind_hosts = ["0.0.0.0"];
+        port = 53;
 
-  #       upstream_dns = [
-  #         "https://dns.quad9.net/dns-query"
-  #         "https://1.1.1.1/dns-query"
-  #       ];
+        upstream_dns = [
+          "https://dns.quad9.net/dns-query"
+          "https://1.1.1.1/dns-query"
+        ];
 
-  #       bootstrap_dns = ["9.9.9.9" "1.1.1.1"];
+        bootstrap_dns = ["9.9.9.9" "1.1.1.1"];
 
-  #       protection_enabled = true;
-  #       refuse_any = true;
-  #       blocking_mode = "default";
-  #       upstream_mode = "load_balance";
+        protection_enabled = true;
+        refuse_any = true;
+        blocking_mode = "default";
+        upstream_mode = "load_balance";
 
-  #       cache_size = 4194304;
-  #       cache_ttl_min = 300;
-  #       cache_ttl_max = 86400;
-  #       cache_optimistic = true;
+        cache_size = 4194304;
+        cache_ttl_min = 300;
+        cache_ttl_max = 86400;
+        cache_optimistic = true;
 
-  #       ratelimit = 20;
+        ratelimit = 20;
 
-  #       allowed_clients = [
-  #         "127.0.0.1"
-  #         lanCidr
-  #         "100.64.0.0/10"
-  #       ];
-  #     };
+        allowed_clients = [
+          "127.0.0.1"
+          lanCidr
+          "100.64.0.0/10"
+        ];
+      };
 
-  #     filtering = {
-  #       protection_enabled = true;
-  #       filtering_enabled = true;
-  #       parental_enabled = false;
-  #     };
+      filtering = {
+        protection_enabled = true;
+        filtering_enabled = true;
+        parental_enabled = false;
+      };
 
-  #     safebrowsing.enabled = true;
+      safebrowsing.enabled = true;
 
-  #     querylog = {
-  #       enabled = true;
-  #       interval = 2160;
-  #       size_memory = 1000;
-  #     };
+      querylog = {
+        enabled = true;
+        interval = 2160;
+        size_memory = 1000;
+      };
 
-  #     statistics = {
-  #       enabled = true;
-  #       interval = 24;
-  #     };
+      statistics = {
+        enabled = true;
+        interval = 24;
+      };
 
-  #     filters = [
-  #       {
-  #         enabled = true;
-  #         url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
-  #       }
-  #       {
-  #         enabled = true;
-  #         url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt";
-  #       }
-  #       {
-  #         enabled = true;
-  #         url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt";
-  #       }
-  #     ];
+      filters = [
+        {
+          enabled = true;
+          url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_1.txt";
+        }
+        {
+          enabled = true;
+          url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt";
+        }
+        {
+          enabled = true;
+          url = "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt";
+        }
+      ];
 
-  #     whitelist_filters = [];
-  #     user_rules = [];
-  #     dhcp.enabled = false;
+      whitelist_filters = [];
+      user_rules = [];
+      dhcp.enabled = false;
 
-  #     log = {
-  #       file = "";
-  #       max_backups = 1;
-  #       max_size = 10;
-  #       max_age = 7;
-  #       compress = true;
-  #       verbose = false;
-  #     };
-  #   };
-  # };
+      log = {
+        file = "";
+        max_backups = 1;
+        max_size = 10;
+        max_age = 7;
+        compress = true;
+        verbose = false;
+      };
+    };
+  };
 
   services.prometheus = {
     enable = true;
@@ -195,70 +195,70 @@ in {
     enabledCollectors = ["systemd" "cpu" "meminfo" "filesystem" "loadavg" "netdev"];
   };
 
-  # services.grafana = {
-  #   enable = true;
+  services.grafana = {
+    enable = true;
 
-  #   settings = {
-  #     server = {
-  #       http_addr = "127.0.0.1";
-  #       http_port = 3010;
-  #       domain = "grafana.${domain}";
-  #       root_url = "https://grafana.${domain}/";
-  #     };
+    settings = {
+      server = {
+        http_addr = "127.0.0.1";
+        http_port = 3010;
+        domain = "grafana.${domain}";
+        root_url = "https://grafana.${domain}/";
+      };
 
-  #     security = {
-  #       admin_user = "admin";
-  #       admin_password = "$__file{/run/secrets/grafana/admin-password}";
-  #       cookie_secure = true;
-  #       strict_transport_security = true;
-  #     };
+      security = {
+        admin_user = "admin";
+        admin_password = "$__file{/run/secrets/grafana/admin-password}";
+        cookie_secure = true;
+        strict_transport_security = true;
+      };
 
-  #     users = {
-  #       allow_sign_up = false;
-  #     };
-  #   };
+      users = {
+        allow_sign_up = false;
+      };
+    };
 
-  #   provision = {
-  #     enable = true;
+    provision = {
+      enable = true;
 
-  #     datasources.settings = {
-  #       apiVersion = 1;
-  #       datasources = [
-  #         {
-  #           name = "Prometheus";
-  #           type = "prometheus";
-  #           access = "proxy";
-  #           url = "http://127.0.0.1:9090";
-  #           isDefault = true;
-  #         }
-  #       ];
-  #     };
-  #   };
-  # };
+      datasources.settings = {
+        apiVersion = 1;
+        datasources = [
+          {
+            name = "Prometheus";
+            type = "prometheus";
+            access = "proxy";
+            url = "http://127.0.0.1:9090";
+            isDefault = true;
+          }
+        ];
+      };
+    };
+  };
 
-  # services.syncthing = {
-  #   enable = true;
-  #   user = "kit";
-  #   group = "users";
-  #   dataDir = "/home/kit/Sync";
-  #   configDir = "/home/kit/.config/syncthing";
-  #   guiAddress = "127.0.0.1:8384";
-  #   openDefaultPorts = false;
-  #   overrideDevices = false;
-  #   overrideFolders = false;
-  #   guiPasswordFile = config.sops.secrets."syncthing/gui-password".path;
+  services.syncthing = {
+    enable = true;
+    user = "kit";
+    group = "users";
+    dataDir = "/home/kit/Sync";
+    configDir = "/home/kit/.config/syncthing";
+    guiAddress = "127.0.0.1:8384";
+    openDefaultPorts = false;
+    overrideDevices = false;
+    overrideFolders = false;
+    guiPasswordFile = config.sops.secrets."syncthing/gui-password".path;
 
-  #   settings = {
-  #     options = {
-  #       localAnnounceEnabled = true;
-  #       relaysEnabled = true;
-  #       urAccepted = -1;
-  #     };
+    settings = {
+      options = {
+        localAnnounceEnabled = true;
+        relaysEnabled = true;
+        urAccepted = -1;
+      };
 
-  #     devices = {};
-  #     folders = {};
-  #   };
-  # };
+      devices = {};
+      folders = {};
+    };
+  };
 
   services.caddy = {
     enable = true;
