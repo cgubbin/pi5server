@@ -21,7 +21,7 @@ in {
 
     age = {
       # Recommended for a server: host-specific age key stored locally.
-      keyFile = "./config/sops/age/keys.txt";
+      keyFile = "/home/kit/.config/sops/age/keys.txt";
       generateKey = true;
     };
 
