@@ -64,20 +64,12 @@ in {
 
   services.adguardhome = {
     enable = true;
-
-    # This option only opens the web UI; DNS is still handled explicitly
-    # by the firewall rules above.
     openFirewall = true;
-
-    # Make the config declarative.
     mutableSettings = false;
-
-    # host = "127.0.0.1";
-    # port = 3000;
 
     settings = {
       http = {
-        address = "127.0.0.1:3000";
+        address = "0.0.0.0:3000"; # IMPORTANT: not just localhost
         session_ttl = "720h";
       };
 
@@ -103,16 +95,15 @@ in {
         bootstrap_dns = ["9.9.9.9" "1.1.1.1"];
 
         protection_enabled = true;
-        refuse_any = true;
-        blocking_mode = "default";
+        blocking_mode = "nxdomain"; # better UX than "default"
         upstream_mode = "load_balance";
 
-        cache_size = 4194304;
+        cache_size = 8388608; # 8MB (Pi-safe improvement)
         cache_ttl_min = 300;
         cache_ttl_max = 86400;
         cache_optimistic = true;
 
-        ratelimit = 20;
+        ratelimit = 100; # 20 is too low for LAN bursts
 
         allowed_clients = [
           "127.0.0.1"
@@ -125,6 +116,9 @@ in {
         protection_enabled = true;
         filtering_enabled = true;
         parental_enabled = false;
+        safe_search = {
+          enabled = true;
+        };
       };
 
       safebrowsing = {
@@ -133,8 +127,8 @@ in {
 
       querylog = {
         enabled = true;
-        interval = "2160h";
-        size_memory = 1000;
+        interval = "720h"; # 30 days is more realistic than 90d memory-heavy logs
+        size_memory = 2000;
       };
 
       statistics = {
@@ -157,14 +151,19 @@ in {
         }
       ];
 
-      whitelist_filters = [];
-      user_rules = [];
-      dhcp.enabled = false;
+      user_rules = [
+        # Example:
+        # "||ads.example.com^"
+      ];
+
+      dhcp = {
+        enabled = false;
+      };
 
       log = {
         file = "";
-        max_backups = 1;
-        max_size = 10;
+        max_backups = 2;
+        max_size = 50;
         max_age = 7;
         compress = true;
         verbose = false;
