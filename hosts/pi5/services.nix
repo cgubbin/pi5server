@@ -84,7 +84,7 @@ in {
       users = [
         {
           name = "admin";
-          password = builtins.readFile config.sops.secrets."adguard/admin-password-hash".path;
+          password = config.sops.placeholder."adguard/admin-password-hash";
         }
       ];
 
@@ -219,7 +219,7 @@ in {
 
       security = {
         admin_user = "admin";
-        admin_password = builtins.readFile config.sops.secrets."grafana/admin-password".path;
+        admin_password = config.sops.placeholder."grafana/admin-password";
         cookie_secure = true;
         strict_transport_security = true;
       };
