@@ -30,8 +30,8 @@ in {
         sopsFile = ../../secrets/pi5.yaml;
         key = "adguard/admin-password-hash";
         path = "/run/secrets/adguard/admin-password-hash";
-        owner = "adguardhome";
-        group = "adguardhome";
+        owner = "kit";
+        group = "users";
         mode = "0400";
       };
 
@@ -39,8 +39,8 @@ in {
         sopsFile = ../../secrets/pi5.yaml;
         key = "grafana/admin-password";
         path = "/run/secrets/grafana/admin-password";
-        owner = "grafana";
-        group = "grafana";
+        owner = "kit";
+        group = "users";
         mode = "0400";
       };
 
