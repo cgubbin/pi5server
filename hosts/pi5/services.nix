@@ -218,6 +218,14 @@ in {
           {targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];}
         ];
       }
+      {
+        job_name = "caddy";
+        static_configs = [
+          {
+            targets = ["127.0.0.1:2019"];
+          }
+        ];
+      }
     ];
   };
 
@@ -326,5 +334,12 @@ in {
         '';
       };
     };
+    extraConfig = ''
+      reverse_proxy 127.0.0.1:3010
+      encode gzip
+
+      tls internal
+      metrics
+    '';
   };
 }
