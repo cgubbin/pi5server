@@ -25,7 +25,7 @@ in {
 
     serviceConfig = {
       ExecStart = ''
-        ${adguardExporter}/bin/adguard_exporter \
+        ${adguardExporter}/bin/adguard-exporter \
           --adguard.addr http://127.0.0.1:3000
       '';
 
