@@ -110,6 +110,25 @@ in {
           lanCidr
           "100.64.0.0/10"
         ];
+
+        rewrites = [
+          {
+            domain = "adguard.home.arpa";
+            answer = "192.168.1.37";
+          }
+          {
+            domain = "grafana.home.arpa";
+            answer = "192.168.1.37";
+          }
+          {
+            domain = "prometheus.home.arpa";
+            answer = "192.168.1.37";
+          }
+          {
+            domain = "syncthing.home.arpa";
+            answer = "192.168.1.37";
+          }
+        ];
       };
 
       filtering = {
@@ -117,12 +136,12 @@ in {
         filtering_enabled = true;
         parental_enabled = false;
         safe_search = {
-          enabled = true;
+          enabled = false;
         };
       };
 
       safebrowsing = {
-        enabled = true;
+        enabled = false;
       };
 
       querylog = {
@@ -282,6 +301,12 @@ in {
       "grafana.${domain}" = {
         extraConfig = ''
           reverse_proxy 127.0.0.1:3010
+        '';
+      };
+
+      "prometheus.${domain}" = {
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:9090
         '';
       };
 
