@@ -7,14 +7,14 @@
   lanCidr = "192.168.1.0/24";
   domain = "home.arpa";
   adguardExporter = pkgs.buildGoModule {
-    pname = "adguard-exporter";
-    version = "0.0.1";
+    pname = "adguard-home-exporter";
+    version = "latest";
 
     src = pkgs.fetchFromGitHub {
-      owner = "wirelesstools";
-      repo = "adguard_exporter";
-      rev = "v0.0.1";
-      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      owner = "henrywhitaker3";
+      repo = "adguard-home-exporter";
+      rev = "master";
+      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
     };
 
     vendorHash = null;
