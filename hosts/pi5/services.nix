@@ -122,25 +122,25 @@ in {
 
         rewrites = [
           {
-            domain = "adguard.home.arpa";
+            domain = "*.home.arpa";
             answer = "192.168.1.37";
             enabled = true;
           }
-          {
-            domain = "grafana.home.arpa";
-            answer = "192.168.1.37";
-            enabled = true;
-          }
-          {
-            domain = "prometheus.home.arpa";
-            answer = "192.168.1.37";
-            enabled = true;
-          }
-          {
-            domain = "syncthing.home.arpa";
-            answer = "192.168.1.37";
-            enabled = true;
-          }
+          # {
+          #   domain = "grafana.home.arpa";
+          #   answer = "192.168.1.37";
+          #   enabled = true;
+          # }
+          # {
+          #   domain = "prometheus.home.arpa";
+          #   answer = "192.168.1.37";
+          #   enabled = true;
+          # }
+          # {
+          #   domain = "syncthing.home.arpa";
+          #   answer = "192.168.1.37";
+          #   enabled = true;
+          # }
         ];
       };
 
