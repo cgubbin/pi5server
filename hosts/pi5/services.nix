@@ -110,6 +110,15 @@ in {
           lanCidr
           "100.64.0.0/10"
         ];
+      };
+
+      filtering = {
+        protection_enabled = true;
+        filtering_enabled = true;
+        parental_enabled = false;
+        safe_search = {
+          enabled = false;
+        };
 
         rewrites = [
           {
@@ -129,15 +138,6 @@ in {
             answer = "192.168.1.37";
           }
         ];
-      };
-
-      filtering = {
-        protection_enabled = true;
-        filtering_enabled = true;
-        parental_enabled = false;
-        safe_search = {
-          enabled = false;
-        };
       };
 
       safebrowsing = {
