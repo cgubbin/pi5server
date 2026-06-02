@@ -17,7 +17,7 @@
       hash = "sha256-T9BtFD76hhf72x5CI1JpqpzxBoqrOqiUfyiAb2ktpFY";
     };
 
-    vendorHash = null;
+    vendorHash = "sha256-T9BtFD76hhf72x5CI1JpqpzxBoqrOqiUfyiAb2ktpFY";
   };
 in {
   systemd.services.adguard-exporter = {
