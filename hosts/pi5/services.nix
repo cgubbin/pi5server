@@ -6,6 +6,19 @@
 }: let
   lanCidr = "192.168.1.0/24";
   domain = "home.arpa";
+  adguardExporter = pkgs.buildGoModule {
+    pname = "adguard-exporter";
+    version = "0.0.1";
+
+    src = pkgs.fetchFromGitHub {
+      owner = "wirelesstools";
+      repo = "adguard_exporter";
+      rev = "v0.0.1";
+      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    };
+
+    vendorHash = null;
+  };
 in {
   services.tailscale = {
     enable = true;
@@ -213,6 +226,14 @@ in {
         ];
       }
       {
+        job_name = "adguard";
+        static_configs = [
+          {
+            targets = ["127.0.0.1:9618"];
+          }
+        ];
+      }
+      {
         job_name = "node";
         static_configs = [
           {targets = ["127.0.0.1:${toString config.services.prometheus.exporters.node.port}"];}
@@ -234,13 +255,6 @@ in {
     listenAddress = "127.0.0.1";
     openFirewall = false;
     enabledCollectors = ["systemd" "cpu" "meminfo" "filesystem" "loadavg" "netdev"];
-  };
-
-  services.prometheus.exporters.adguard = {
-    enable = true;
-    url = "http://127.0.0.1:3000";
-    username = "admin";
-    password = builtins.readFile config.sops.secrets."adguard/admin-password-hash".path;
   };
 
   services.grafana = {
