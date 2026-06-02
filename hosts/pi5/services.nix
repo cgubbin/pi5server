@@ -6,32 +6,7 @@
 }: let
   lanCidr = "192.168.1.0/24";
   domain = "home.arpa";
-  adguardExporter = pkgs.buildGoModule {
-    pname = "adguard-exporter";
-    version = "latest";
-
-    src = pkgs.fetchFromGitHub {
-      owner = "henrywhitaker3";
-      repo = "adguard-exporter";
-      rev = "master";
-      hash = "sha256-T9BtFD76hhf72x5CI1JpqpzxBoqrOqiUfyiAb2ktpFY";
-    };
-
-    vendorHash = "sha256-fDSR0+INsVBD5XauPdSETMNJZkrIbpKwZ/6Tb2Po4fY";
-  };
 in {
-  systemd.services.adguard-exporter = {
-    wantedBy = ["multi-user.target"];
-
-    serviceConfig = {
-      ExecStart = ''
-        ${adguardExporter}/bin/adguard-exporter \
-          --adguard.addr http://127.0.0.1:3000
-      '';
-
-      Restart = "always";
-    };
-  };
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "none";
