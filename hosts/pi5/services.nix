@@ -14,7 +14,7 @@
       owner = "henrywhitaker3";
       repo = "adguard-exporter";
       rev = "master";
-      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+      hash = "sha256-T9BtFD76hhf72x5CI1JpqpzxBoqrOqiUfyiAb2ktpFY";
     };
 
     vendorHash = null;
