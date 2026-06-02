@@ -236,6 +236,13 @@ in {
     enabledCollectors = ["systemd" "cpu" "meminfo" "filesystem" "loadavg" "netdev"];
   };
 
+  services.prometheus.exporters.adguard = {
+    enable = true;
+    url = "http://127.0.0.1:3000";
+    username = "admin";
+    password = builtins.readFile config.sops.secrets."adguard/admin-password-hash".path;
+  };
+
   services.grafana = {
     enable = true;
 
