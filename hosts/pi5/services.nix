@@ -16,18 +16,15 @@ in {
   services.fail2ban.enable = true;
 
   sops = {
-    defaultSopsFile = ../../secrets/pi5.yaml;
-    defaultSopsFormat = "yaml";
-
     age = {
       # Recommended for a server: host-specific age key stored locally.
-      keyFile = "/home/kit/.config/sops/age/keys.txt";
-      generateKey = true;
+      keyFile = "/etc/sops/age/keys.txt";
+      generateKey = false;
     };
 
     secrets = {
       "adguard/admin-password-hash" = {
-        sopsFile = ../../secrets/pi5.yaml;
+        sopsFile = ../../secrets/adguard.yaml;
         key = "adguard/admin-password-hash";
         path = "/run/secrets/adguard/admin-password-hash";
         owner = "kit";
@@ -36,7 +33,7 @@ in {
       };
 
       "grafana/admin-password" = {
-        sopsFile = ../../secrets/pi5.yaml;
+        sopsFile = ../../secrets/grafana.yaml;
         key = "grafana/admin-password";
         path = "/run/secrets/grafana/admin-password";
         owner = "kit";
@@ -45,7 +42,7 @@ in {
       };
 
       "syncthing/gui-password" = {
-        sopsFile = ../../secrets/pi5.yaml;
+        sopsFile = ../../secrets/syncthing.yaml;
         key = "syncthing/gui-password";
         path = "/run/secrets/syncthing/gui-password";
         owner = "kit";
