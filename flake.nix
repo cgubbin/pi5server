@@ -36,12 +36,12 @@
         ({...}: {
           imports = [
             nixos-raspberrypi.nixosModules.raspberry-pi-5.base
+            nixos-raspberrypi.nixosModules.sd-image
             argon40-nix.nixosModules.default
           ];
         })
 
         ./hosts/pi5/default.nix
-        ./hosts/pi5/hardware-configuration.nix
         ./hosts/pi5/networking.nix
         ./hosts/pi5/users.nix
         ./hosts/pi5/services.nix
