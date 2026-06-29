@@ -37,11 +37,6 @@
     sops
   ];
 
-  boot.loader.raspberry-pi = {
-    enable = true;
-    bootloader = "kernel";
-  };
-
   services.openssh = {
     enable = true;
     settings = {
@@ -66,34 +61,5 @@
     "vm.swappiness" = 10;
     "net.ipv4.ip_forward" = 0;
     "net.ipv6.conf.all.forwarding" = 0;
-  };
-
-  programs.argon.one = {
-    enable = true;
-
-    settings = {
-      # Is 'celsius' by default, can also be set to 'fahrenheit'
-      displayUnits = "celsius";
-
-      # This is the same config as the original Argon40 config.
-      # This is also the default config for this flake.
-      fanspeed = [
-        {
-          # This the temperature threshold at which this fan speed will activate.
-          # The temperature is in the above specified unit.
-          temperature = 55;
-          # This is speed percentage at which the fan will spin.
-          speed = 30;
-        }
-        {
-          temperature = 60;
-          speed = 55;
-        }
-        {
-          temperature = 65;
-          speed = 100;
-        }
-      ];
-    };
   };
 }
