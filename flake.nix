@@ -4,6 +4,7 @@
   inputs = {
     sops-nix.url = "github:Mic92/sops-nix";
     nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+    argon40-nix.url = "github:guusvanmeerveld/argon40-nix";
   };
 
   nixConfig = {
@@ -19,6 +20,7 @@
     self,
     sops-nix,
     nixos-raspberrypi,
+    argon40-nix,
     ...
   }: {
     nixosConfigurations.pi5 = nixos-raspberrypi.lib.nixosSystem {
@@ -32,13 +34,14 @@
         sops-nix.nixosModules.sops
 
         ({...}: {
-          imports = with nixos-raspberrypi.nixosModules; [
-            raspberry-pi-5.base
-            sd-image
+          imports = [
+            nixos-raspberrypi.nixosModules.raspberry-pi-5.base
+            argon40-nix.nixosModules.default
           ];
         })
 
         ./hosts/pi5/default.nix
+        ./hosts/pi5/hardware-configuration.nix
         ./hosts/pi5/networking.nix
         ./hosts/pi5/users.nix
         ./hosts/pi5/services.nix
