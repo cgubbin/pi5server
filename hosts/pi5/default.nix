@@ -44,6 +44,7 @@
     tmux
     age
     sops
+    restic
   ];
 
   services.openssh = {
