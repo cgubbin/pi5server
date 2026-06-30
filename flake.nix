@@ -22,32 +22,43 @@
     nixos-raspberrypi,
     argon40-nix,
     ...
-  }: {
+  }: let
+    pi5CommonModules = [
+      sops-nix.nixosModules.sops
+
+      ({...}: {
+        imports = [
+          nixos-raspberrypi.nixosModules.raspberry-pi-5.base
+          argon40-nix.nixosModules.default
+        ];
+      })
+
+      ./hosts/pi5/default.nix
+      ./hosts/pi5/hardware-configuration.nix
+      ./hosts/pi5/networking.nix
+      ./hosts/pi5/users.nix
+      ./hosts/pi5/services.nix
+      ./modules/caddy-local-tls.nix
+    ];
+  in {
     nixosConfigurations.pi5 = nixos-raspberrypi.lib.nixosSystem {
       system = "aarch64-linux";
-
       specialArgs = {
         inherit (inputs) nixos-raspberrypi;
       };
+      modules = pi5CommonModules;
+    };
 
-      modules = [
-        sops-nix.nixosModules.sops
-
-        ({...}: {
-          imports = [
-            nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-            ## nixos-raspberrypi.nixosModules.sd-image
-            argon40-nix.nixosModules.default
-          ];
-        })
-
-        ./hosts/pi5/default.nix
-        ./hosts/pi5/networking.nix
-        ./hosts/pi5/users.nix
-        ./hosts/pi5/services.nix
-        ./hosts/pi5/hardware-configuration.nix
-        ./modules/caddy-local-tls.nix
-      ];
+    nixosConfigurations.pi5-installer = nixos-raspberrypi.lib.nixosSystem {
+      system = "aarch64-linux";
+      specialArgs = {
+        inherit (inputs) nixos-raspberrypi;
+      };
+      modules =
+        pi5CommonModules
+        ++ [
+          nixos-raspberrypi.nixosModules.sd-image
+        ];
     };
   };
 }

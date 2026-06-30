@@ -36,8 +36,8 @@ in {
         sopsFile = ../../secrets/grafana.yaml;
         key = "grafana/admin-password";
         path = "/run/secrets/grafana/admin-password";
-        owner = "kit";
-        group = "users";
+        owner = "grafana";
+        group = "grafana";
         mode = "0400";
       };
 
@@ -341,12 +341,5 @@ in {
         '';
       };
     };
-    extraConfig = ''
-      reverse_proxy 127.0.0.1:3010
-      encode gzip
-
-      tls internal
-      metrics
-    '';
   };
 }
