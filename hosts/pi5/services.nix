@@ -16,23 +16,28 @@ in {
   systemd.services.tailscale-autoconnect = {
     description = "Authenticate Tailscale";
 
-    after = ["tailscaled.service"];
-    wants = ["tailscaled.service"];
+    after = ["tailscaled.service" "sops-nix.service"];
+    wants = ["tailscaled.service" "sops-nix.service"];
     wantedBy = ["multi-user.target"];
+
+    path = [
+      pkgs.jq
+      pkgs.tailscale
+    ];
 
     serviceConfig = {
       Type = "oneshot";
     };
 
     script = ''
-      if ! ${pkgs.tailscale}/bin/tailscale status >/dev/null 2>&1; then
-        AUTH_KEY=$(cat ${config.sops.secrets."tailscale/auth-key".path})
-
-        ${pkgs.tailscale}/bin/tailscale up \
-          --auth-key="$AUTH_KEY" \
-          --accept-routes \
-          --accept-dns=false
+      if tailscale status --json | jq -e '.BackendState == "Running"' >/dev/null; then
+        exit 0
       fi
+
+      tailscale up \
+        --auth-key="$(cat ${config.sops.secrets."tailscale/auth-key".path})" \
+        --accept-routes \
+        --accept-dns=false
     '';
   };
 
