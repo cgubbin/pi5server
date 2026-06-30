@@ -36,7 +36,7 @@
         ({...}: {
           imports = [
             nixos-raspberrypi.nixosModules.raspberry-pi-5.base
-            nixos-raspberrypi.nixosModules.sd-image
+            ## nixos-raspberrypi.nixosModules.sd-image
             argon40-nix.nixosModules.default
           ];
         })
