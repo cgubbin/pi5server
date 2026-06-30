@@ -87,6 +87,15 @@ in {
         mode = "0400";
       };
 
+      "restic/password" = {
+        sopsFile = ../../secrets/restic.yaml;
+        key = "restic/password";
+        path = "/run/secrets/restic/password";
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
+
       # Optional, only needed if you later use Caddy DNS-provider plugins.
       # "caddy/env" = {
       #   owner = "caddy";
