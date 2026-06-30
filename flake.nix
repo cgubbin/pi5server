@@ -45,6 +45,7 @@
         ./hosts/pi5/networking.nix
         ./hosts/pi5/users.nix
         ./hosts/pi5/services.nix
+        ./hosts/pi5/hardware-configuration.nix
         ./modules/caddy-local-tls.nix
       ];
     };
