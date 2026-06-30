@@ -13,6 +13,10 @@ in {
     openFirewall = true;
   };
 
+  services.restic = {
+    enable = true;
+  };
+
   systemd.services.tailscale-autoconnect = {
     description = "Authenticate Tailscale";
 
