@@ -32,6 +32,15 @@ in {
         mode = "0400";
       };
 
+      "tailscale/auth-key" = {
+        sopsFile = ../../secrets/tailscale.yaml;
+        key = "tailscale/auth-key";
+        path = "/run/secrets/tailscale/auth-key";
+        owner = "root";
+        group = "root";
+        mode = "0400";
+      };
+
       "grafana/admin-password" = {
         sopsFile = ../../secrets/grafana.yaml;
         key = "grafana/admin-password";
