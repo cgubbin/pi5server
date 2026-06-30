@@ -16,7 +16,7 @@ in {
   services.restic.backups.pi5 = {
     initialize = false;
 
-    repository = "rest:http://backup@kitsune/mnt/Media/backups/pi5";
+    repository = "sftp:kitsune-backup:/mnt/Media/backups/pi5";
     passwordFile = config.sops.secrets."restic/password".path;
 
     paths = [
