@@ -13,6 +13,29 @@ in {
     openFirewall = true;
   };
 
+  systemd.services.tailscale-autoconnect = {
+    description = "Authenticate Tailscale";
+
+    after = ["tailscaled.service"];
+    wants = ["tailscaled.service"];
+    wantedBy = ["multi-user.target"];
+
+    serviceConfig = {
+      Type = "oneshot";
+    };
+
+    script = ''
+      if ! ${pkgs.tailscale}/bin/tailscale status >/dev/null 2>&1; then
+        AUTH_KEY=$(cat ${config.sops.secrets."tailscale/auth-key".path})
+
+        ${pkgs.tailscale}/bin/tailscale up \
+          --auth-key="$AUTH_KEY" \
+          --accept-routes \
+          --accept-dns=false
+      fi
+    '';
+  };
+
   services.fail2ban.enable = true;
 
   sops = {
