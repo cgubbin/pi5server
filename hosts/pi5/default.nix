@@ -9,6 +9,10 @@
   boot.loader.raspberry-pi = {
     enable = true;
     bootloader = "kernel";
+
+    # config = ''
+    #   usb_max_current_enable=1
+    # '';
   };
 
   nix = {
