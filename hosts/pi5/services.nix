@@ -13,6 +13,32 @@ in {
     openFirewall = true;
   };
 
+  services.restic.backups.pi5 = {
+    initialize = false;
+
+    repository = "rest:http://backup@kitsune/mnt/Media/backups/pi5";
+    passwordFile = config.sops.secrets."restic/password".path;
+
+    paths = [
+      "/var/lib/grafana"
+      "/var/lib/AdGuardHome"
+      "/var/lib/syncthing"
+      "/var/lib/tailscale"
+      "/etc/sops/age"
+    ];
+
+    timerConfig = {
+      OnCalendar = "03:00";
+      Persistent = true;
+    };
+
+    pruneOpts = [
+      "--keep-daily 7"
+      "--keep-weekly 4"
+      "--keep-monthly 12"
+    ];
+  };
+
   systemd.services.tailscale-autoconnect = {
     description = "Authenticate Tailscale";
 
